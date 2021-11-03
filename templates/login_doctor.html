@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cardiologist Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url("../static/bg.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: 'Arial';
+        }
+
+        footer {
+            padding: 5px;
+            text-align: center;
+            background-color: #0D5EBA;
+            bottom: -100px;
+            color: white;
+            width: 99%;
+            position: absolute;
+        }
+
+        .login {
+            width: 382px;
+            margin: 20px 0px 0px 450px;
+            padding: 50px;
+            background-color: black;
+            opacity: 70%;
+            border-radius: 15px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #fff;
+            padding: 20px;
+        }
+
+        label {
+            color: white;
+            font-size: 20px;
+            font-family: "MS UI Gothic";
+        }
+
+        #email {
+            width: 250px;
+            height: 30px;
+            border: none;
+            border-radius: 3px;
+            padding-left: 8px;
+            margin-left: 50px;
+        }
+
+        #Pass {
+            width: 250px;
+            height: 30px;
+            border: none;
+            border-radius: 3px;
+            padding-left: 8px;
+            margin-left: 10px;
+        }
+
+        #log {
+            width: 200px;
+            height: 30px;
+            border: none;
+            border-radius: 17px;
+            padding-left: 7px;
+            background-color: #0D5EBA;
+            font-size: 18px;
+            color: white;
+            margin-left: 90px;
+        }
+
+        span {
+            color: white;
+            font-size: 17px;
+        }
+
+        a {
+            float: left;
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+    <script>
+        function validate() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("Pass").value;
+            if (email == null || email == "") {
+                alert("Please enter the email.");
+                return false;
+            }
+            if (password == null || password == "") {
+                alert("Please enter the password.");
+                return false;
+            }
+
+        }
+    </script>
+</head>
+<body>
+
+<h2>Cardiologist Login</h2><br>
+<div class="login">
+    <form id="login" method="POST" action="{% url 'login_doctor_confirmed' %}">
+        {%  csrf_token  %}
+        <label><b>Email</b></label>
+        <input type="email" name="email" id="email" placeholder="Email">
+        <br><br><br>
+        <label><b>Password
+        </b>
+        </label>
+        <input type="Password" name="pass" id="Pass" placeholder="Password">
+        <br><br><br>
+        <input type="submit" onclick="validate()" name="log" id="log" value="Login">
+        <br><br>
+        <p></p>
+    </form>
+</div>
+<br>
+<footer>
+    <p>Disclaimer Copyright<br>Douglas College, Department of Computing Studies and Information Systems.</p>
+</footer>
+</body>
+</html>

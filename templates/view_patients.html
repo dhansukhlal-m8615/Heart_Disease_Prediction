@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Profile</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        *, body {
+            padding: 0;
+            margin: 0;
+        }
+
+        #addDoctor {
+            background-image: url("{%static 'bg.jpg'%}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 600px;
+        }
+
+        .header {
+            height: 100px;
+        }
+
+        .header img {
+            float: left;
+            margin-left: 200px;
+        }
+
+        ul {
+            list-style-type: none;
+            overflow: hidden;
+            margin-top: 5px;
+            margin-left: 220px;
+        }
+
+        li {
+            float: left;
+            margin-right: 120px;
+            height: 50px;
+            text-align: center;
+        }
+
+        li a {
+            font-size: 20px;
+            font-family: "MS UI Gothic";
+            font-weight: bold;
+            color: #3d3d3d;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+            color: #3f7cc4;
+        }
+
+        .header h1 {
+            position: relative;
+            display: inline;
+            top: 20px;
+            color: #3f7cc4;
+            font-family: "MS UI Gothic";
+            font-size: 40px;
+            font-weight: lighter;
+            text-align: left;
+        }
+
+        .doctor {
+            background-color: white;
+            padding: 10px;
+            margin-left: 180px;
+            width: 70%;
+            color: black;
+            border: black solid 1px;
+        }
+
+        input {
+            float: right;
+            margin-right: 60px;
+        }
+
+        table {
+            font-size: 15px;
+            background-color: white;
+            margin-left: 55px;
+            width: 90%;
+        }
+
+        td, th {
+            padding-left: 100px;
+            height: 55px;
+            text-align: left;
+            border-bottom: grey 1px solid;
+        }
+
+        th{
+            border: none;
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+        h4 {
+            font-size: 15px;
+        }
+
+        input[type=submit] {
+            background-color: #0D5EBA;
+            color: white;
+            border-radius: 20px;
+            width: 180px;
+            height: 45px;
+            margin-right: 250px;
+        }
+
+        footer {
+            padding: 5px;
+            text-align: center;
+            background-color: #0D5EBA;
+            color: white;
+            width: 100%;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <img src="{% static 'icon.jpg' %}" alt="icon image" width="100" height="100">
+    <h1>Heart Disease Prediction</h1>
+</div>
+<div>
+    <ul>
+        <li><a href="{% url 'doctor_profile' %}">Profile</a></li>
+        <li><a href="{% url 'view_patients' %}">View Patients</a></li>
+        <li><a href="{% url 'doctor_chatroom' %}">View Messages</a></li>
+        <li><a href="{% url 'feedback_doctor' %}">Feedback</a></li>
+        <li><a href="{% url 'home' %}">Logout</a></li>
+    </ul>
+</div>
+
+<div id="addDoctor">
+    <br>
+    <div class="doctor">
+        <table>
+            <tr>
+                <th>Patient Name</th>
+            </tr>
+            {% for patient in patients_list %}
+                <tr>
+                    <form method="post" action="{% url 'patient_heart_records' p_email=patient.3 %}">
+                        {% csrf_token %}
+                        <td>{{ patient.0 }} {{ patient.1 }}</td>
+                        <input hidden type="text" name="patient_email" value="{{ patient.2 }}">
+                        <td><input type="submit" value="View Heart Records"></td>
+                    </form>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+<footer>
+    <p>Disclaimer Copyright<br>Douglas College, Department of Computing Studies and Information Systems.</p>
+</footer>
+</body>
+</html>

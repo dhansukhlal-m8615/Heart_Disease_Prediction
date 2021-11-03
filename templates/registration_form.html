@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Registration</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        *, body {
+            padding: 0;
+            margin: 0;
+        }
+
+        #addDoctor {
+            background-image: url("{%static 'bg2.jpg'%}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 750px;
+        }
+
+        .header {
+            height: 100px;
+        }
+
+        .header img {
+            float: left;
+            margin-left: 200px;
+        }
+
+        ul {
+            list-style-type: none;
+            overflow: hidden;
+            margin: 5px;
+        }
+
+        li {
+            float: right;
+            width: 200px;
+            height: 50px;
+            text-align: center;
+        }
+
+        li a {
+            font-size: 22px;
+            font-family: "MS UI Gothic";
+            font-weight: bold;
+            color: #3d3d3d;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+            color: #3f7cc4;
+        }
+
+        .header h1 {
+            position: relative;
+            display: inline;
+            top: 20px;
+            color: #3f7cc4;
+            font-family: "MS UI Gothic";
+            font-size: 40px;
+            font-weight: lighter;
+            text-align: left;
+        }
+
+        .doctor {
+            margin-left: 350px;
+            background-color: black;
+            opacity: 60%;
+            width: 700px;
+            color: white;
+            height: 700px;
+        }
+
+        table, .gender {
+            margin-left: 130px;
+            font-size: 16px;
+        }
+
+        td {
+            height: 40px;
+        }
+
+        td input, td select {
+            height: 25px;
+            margin-left: 50px;
+        }
+
+        .textboxes {
+            width: 250px;
+        }
+
+        h3 {
+            text-align: center;
+            font-size: 25px;
+        }
+
+        input[type=submit] {
+            background-color: #0d5eba;
+            color: white;
+            border-radius: 20px;
+            width: 150px;
+            height: 45px;
+            margin-top: 20px;
+            margin-left: 290px;
+        }
+
+        footer {
+            text-align: center;
+            background-color: #0D5EBA;
+            color: white;
+            top: 0px;
+            width: 100%;
+            position: relative;
+        }
+    </style>
+    <script>
+         function validate() {
+            var FName = document.getElementById('fname').value;
+            var Lname = document.getElementById('lname').value;
+            var Uname = document.getElementById('uname').value;
+            var password = document.getElementById('password').value;
+            var confirm_password = document.getElementById('confirmpassword').value;
+            var email = document.getElementById('email').value;
+            var gender = document.querySelector('input[name="gender"]:checked');
+            var contact = document.getElementById('contact').value;
+            var address = document.getElementById('address').value;
+            var province = document.getElementById("select");
+            var province = document.getElementById('select');
+            var invalid = province.value;
+            var postal = document.getElementById('postal').value;
+            const accept = document.querySelector('input[name="agree_terms"]:checked')
+            var atposition = email.indexOf("@");
+            var dotposition = email.lastIndexOf(".");
+
+            if (FName == "") { //wanted to check for alphabets only.
+                alert("Don't leave First Name blank!")
+                return false;
+            }
+            if (Lname == "") {//wanted to check for alphabets only.
+                alert("Don't leave Last Name blank!")
+                return false;
+            }
+            if (Uname == "") { //wanted to check for alphabets only.
+                alert("Don't leave User Name blank!")
+                return false;
+            }
+            if (password == '') {
+                alert("Please enter Password");
+                return false;
+            }
+            if(!(password.length>6)){
+                alert("Password is weak. Please enter more than 6 characters");
+                return false;
+            }
+
+            // If confirm password not entered
+            if (confirm_password == '') {
+                alert("Please enter confirm password");
+                return false;
+            }
+            // If Not same return False.
+            if (password != confirm_password) {
+                alert("\nPassword did not match: Please try again...")
+                return false;
+            }
+             if (contact == '') {
+                alert("Please enter contact details");
+                return false;
+            }
+            if (invalid == "Select the Province" || invalid == "") {
+                alert("Select the province");
+                return false;
+            }
+            if (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= email.length) {
+                alert("please enter a valid email address");
+                return false;
+            }
+            if (gender == null) {
+                alert("Gender is not has been selected");
+                return false;
+            }
+            if(address == ''){
+                alert("Please enter valid address");
+                return false;
+            }
+            if (province.value == "" || province.value == "0") {
+            //If the "Please Select" option is selected display error.
+            alert("Please select an option for Province");
+            return false;
+             }
+            if(postal == ""){
+                alert("Please enter valid postal code");
+            return false;
+            }
+            if(accept == null){
+                alert("Please agree the terms and condition");
+                return false;
+            }
+            return true;
+        }
+
+    </script>
+</head>
+<body>
+<div class="header">
+    <img src="{% static 'icon.jpg' %}" alt="icon image" width="100" height="100">
+    <h1>Heart Disease Prediction</h1>
+</div>
+<div>
+    <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="{% url 'home' %}#login">Login</a></li>
+        <li><a href="{% url 'home' %}">Home</a></li>
+    </ul>
+</div>
+<div id="addDoctor">
+    <div class="doctor">
+        <form action="{% url 'registration_form_confirmed' %}" method="POST" id="contact_form">
+            {% csrf_token %}
+            <br>
+            <h3>Patient Registration</h3>
+            <br>
+            <table>
+                <tr>
+                    <td><label>First Name :</label></td>
+                    <td><input name="first_name" class="textboxes" id="fname" placeholder="First Name" type="text"
+                               pattern="[a-zA-Z][a-zA-Z ]{2,}" required></td>
+                </tr>
+                <tr>
+                    <td><label>Last Name :</label></td>
+                    <td><input name="last_name" class="textboxes" id="lname" placeholder="Last Name" type="text"
+                               pattern="[a-zA-Z]{1,}"
+                               required></td>
+                </tr>
+                <tr>
+                    <td><label>User Name :</label></td>
+                    <td><input name="user_name" class="textboxes" id="uname" placeholder="Username" type="text"
+                               pattern="[a-zA-Z][a-zA-Z0-9_ ]{2,}" required></td>
+                </tr>
+                <tr>
+                    <td><label>Address :</label></td>
+                    <td><input name="address" class="textboxes" placeholder="Address" id="address" type="text" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label class="textboxes">Province : </label></td>
+
+                    <td>
+                        <select id="select" name="province" class="required"  required>
+                            <option value="Select the Province">Select the Province</option>
+                            <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
+                            <option value="Prince Edward Island">Prince Edward Island</option>
+                            <option value="Nova Scotia">Nova Scotia</option>
+                            <option value="New Brunswick">New Brunswick</option>
+                            <option value="Quebec">Quebec</option>
+                            <option value="Ontario">Ontario</option>
+                            <option value="Manitoba">Manitoba</option>
+                            <option value="Saskatchewan">Saskatchewan</option>
+                            <option value="Alberta">Alberta</option>
+                            <option value="British Columbia">British Columbia</option>
+                            <option value=Nunavut>Nunavut</option>
+                            <option value="Nothwest Territories">Northwest Territories</option>
+                            <option value="Yukon Territory">Yukon Territory</option>
+                        </select>
+                        <div class="select_arrow"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Postal code: </label></td>
+                    <td><input name="postal_code" class="textboxes" id="postal" placeholder="A9A9A9" type="postal"
+                               pattern="[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]" required></td>
+
+                </tr>
+                <tr>
+                    <td><label>Gender :</label></td>
+                    <td>
+                        <input type="radio" name="gender" id="rd1" value="Male">
+                        <label for="rd1">Male</label>
+                        <input type="radio" name="gender" id="rd2" value="Female">
+                        <label for="rd2">Female</label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label>Email :</label></td>
+                    <td><input name="patient_email" class="textboxes" type="email" id="email"
+                               placeholder="E-Mail Address" required></td>
+                </tr>
+                <tr>
+                    <td><label>Password :</label></td>
+                    <td><input name="password" class="textboxes" type="password" id="password" placeholder="Password"
+                               minlength="7"
+                               required></td>
+                </tr>
+                <tr>
+                    <td><label>Confirm Password :</label></td>
+                    <td><input class="textboxes" type="password" id="confirmpassword" placeholder="Confirm Password"
+                               required></td>
+                </tr>
+                <tr>
+                    <td><label>Contact :</label></td>
+                    <td>
+                        <input name="contact_no" class="textboxes" type="phone" id="contact" placeholder="nnnnnnnnnn"
+                               pattern="[0-9]{10}"
+                               required>
+                    </td>
+                </tr>
+            </table>
+            <div class="gender">
+                <input type="checkbox" id="cb1" name="agree_terms" required>
+                <label for="cb1">I agree with terms and conditions</label>
+            </div>
+            <input class="button" type="submit" value="REGISTER" onclick="validate()"/>
+        </form>
+    </div>
+</div>
+<footer>
+    <p>Disclaimer Copyright<br>Douglas College, Department of Computing Studies and Information Systems.</p>
+</footer>
+</body>
+</html>

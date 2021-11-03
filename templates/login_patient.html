@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url("../static/bg1.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: 'Arial';
+        }
+
+        footer {
+            padding: 5px;
+            text-align: center;
+            background-color: #0D5EBA;
+            color: white;
+            bottom: -100px;
+            width: 99%;
+            position: absolute;
+        }
+
+        .login {
+            width: 382px;
+            margin: 20px 0px 0px 450px;
+            padding: 50px;
+            background-color: black;
+            opacity: 70%;
+            border-radius: 15px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #fff;
+            padding: 20px;
+        }
+
+        label {
+            color: white;
+            font-size: 20px;
+            font-family: "MS UI Gothic";
+        }
+
+        #email {
+            width: 250px;
+            height: 30px;
+            border: none;
+            border-radius: 3px;
+            padding-left: 8px;
+            margin-left: 50px;
+        }
+
+        #Pass {
+            width: 250px;
+            height: 30px;
+            border: none;
+            border-radius: 3px;
+            padding-left: 8px;
+            margin-left: 10px;
+        }
+
+        #log {
+            width: 200px;
+            height: 30px;
+            border: none;
+            border-radius: 17px;
+            padding-left: 7px;
+            background-color: #0D5EBA;
+            font-size: 18px;
+            color: white;
+            margin-left: 90px;
+        }
+
+        span {
+            color: white;
+            font-size: 17px;
+        }
+
+        a {
+            float: left;
+            text-decoration: none;
+            color: white;
+        }
+
+        #create_account {
+            float: right;
+            text-decoration: none;
+            text-align: right;
+            color: white;
+        }
+    </style>
+
+</head>
+<body>
+<h2>Patient Login</h2><br>
+<div class="login">
+    <form id="login" method="POST" action="{% url 'login_patient_confirmed' %}">
+        {%  csrf_token  %}
+        <label><b>Email</b></label>
+        <input type="email" name="email" id="email" placeholder="Email">
+        <br><br><br>
+        <label><b>Password
+        </b>
+        </label>
+        <input type="Password" name="pass" id="Pass" placeholder="Password">
+        <br><br><br>
+        <input type="submit" onclick="validate()" name="log" id="log" value="Login">
+        <br><br>
+        <a id="create_account" href="{%  url 'registration_form' %}">Create account</a>
+        <p class = "error pink-text center-align">{{message}}</p>
+    </form>
+</div>
+<br>
+
+<footer>
+    <p>Disclaimer Copyright<br>Douglas College, Department of Computing Studies and Information Systems.</p>
+</footer>
+</body>
+</html>
